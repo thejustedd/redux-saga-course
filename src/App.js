@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import { fetchCustomers } from './asyncActions/customers';
 import { addCustomerAction, removeCustomerAction } from './store/customerReducer';
 
 function App() {
@@ -37,14 +38,14 @@ function App() {
     <div className="app">
       <div style={{ display: 'flex' }}>
         <input type="text" value={value} onChange={e => setValue(e.target.value)} placeholder="Кол-во денег" />
-        <button onClick={() => addCash(+value)}>Пополнить счёт</button>
-        <button onClick={() => getCash(+value)}>Снять со счёта</button>
+        <button onClick={e => addCash(+value)}>Пополнить счёт</button>
+        <button onClick={e => getCash(+value)}>Снять со счёта</button>
         <div style={{ marginLeft: 10, fontSize: 20 }}>{cash}</div>
       </div>
       <div>
         <input type="text" value={customer} onChange={e => setCustomer(e.target.value)} placeholder="Покупатель" />
-        <button onClick={() => addCustomer(customer)}>Добавить клиента</button>
-        <button onClick={() => removeCustomer()}>Удалить клиента</button>
+        <button onClick={e => addCustomer(customer)}>Добавить клиента</button>
+        <button onClick={e => dispatch(fetchCustomers())}>Получить клиентов из базы</button>
         {customers.length ?
           customers.map(customer =>
             <div key={customer.id}
